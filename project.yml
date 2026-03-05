@@ -1,0 +1,24 @@
+name: GongfuTimer
+options:
+  bundleIdPrefix: com.danielfialkov
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+settings:
+  SWIFT_VERSION: "6.0"
+  MACOSX_DEPLOYMENT_TARGET: "14.0"
+targets:
+  GongfuTimer:
+    type: application
+    platform: macOS
+    sources:
+      - GongfuTimer
+    info:
+      path: GongfuTimer/Info.plist
+      properties:
+        LSUIElement: true
+    settings:
+      INFOPLIST_FILE: GongfuTimer/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: com.danielfialkov.gongfu-timer
+      PRODUCT_NAME: Gongfu Timer
+      SWIFT_STRICT_CONCURRENCY: complete

@@ -1,0 +1,20 @@
+# Build artifacts
+.build/
+GongfuTimer.app/
+
+# Xcode
+*.xcodeproj/
+xcuserdata/
+*.xcworkspace/
+DerivedData/
+
+# Editor / IDE
+.vscode/
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Icon generation temp files
+/tmp/GongfuTimer.iconset/
