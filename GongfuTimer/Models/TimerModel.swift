@@ -74,6 +74,21 @@ final class TimerModel {
         startDisplayLink()
     }
 
+    func nudge(seconds: Int) {
+        if isRunning || isPaused {
+            totalSeconds = max(1, totalSeconds + seconds)
+            // Recompute elapsed so secondsRemaining adjusts on next tick
+            if isPaused {
+                secondsRemaining = max(0, secondsRemaining + seconds)
+            }
+        }
+        currentDuration = max(1, currentDuration + seconds)
+    }
+
+    func resetSteepCount() {
+        steepCount = 0
+    }
+
     func stop() {
         cancelDisplayLink()
         isRunning = false

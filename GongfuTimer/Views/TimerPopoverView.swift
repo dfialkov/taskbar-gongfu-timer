@@ -13,6 +13,14 @@ struct TimerPopoverView: View {
                     Text("Steep #\(model.steepCount)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
+                    Button {
+                        model.resetSteepCount()
+                    } label: {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
                 }
                 Spacer()
                 Button {
@@ -80,8 +88,7 @@ struct TimerPopoverView: View {
     private func nudgeButton(seconds: Int) -> some View {
         Button {
             commitEdit()
-            model.currentDuration = max(1, model.currentDuration + seconds)
-            model.progress = 0
+            model.nudge(seconds: seconds)
         } label: {
             Text(seconds > 0 ? "+\(seconds)" : "\(seconds)")
                 .font(.system(.caption, design: .monospaced))
@@ -89,6 +96,5 @@ struct TimerPopoverView: View {
         }
         .buttonStyle(.bordered)
         .controlSize(.small)
-        .disabled(model.isRunning || model.isPaused)
     }
 }
