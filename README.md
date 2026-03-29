@@ -18,6 +18,8 @@ brew tap dfialkov/gongfu-timer
 brew install --cask gongfu-timer
 ```
 
+On first launch, macOS may block the app. Go to **System Settings > Privacy & Security**, scroll down, and click **Open Anyway**.
+
 Or build from source:
 
 ```
