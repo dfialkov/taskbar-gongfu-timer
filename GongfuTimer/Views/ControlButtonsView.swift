@@ -18,23 +18,22 @@ struct ControlButtonsView: View {
             .tint(.green)
             .controlSize(.large)
         } else {
-            HStack(spacing: 0) {
+            HStack(spacing: 8) {
                 Button(action: isPaused ? onResume : onPause) {
                     Label(isPaused ? "Resume" : "Pause",
                           systemImage: isPaused ? "play.fill" : "pause.fill")
                         .frame(maxWidth: .infinity)
                 }
-                .tint(isPaused ? .green : .orange)
-
-                Divider()
-                    .frame(height: 16)
+                .buttonStyle(.borderedProminent)
+                .tint(isPaused ? .green : Color(nsColor: .systemOrange).opacity(0.85))
 
                 Button(action: onStop) {
                     Image(systemName: "stop.fill")
+                        .frame(maxHeight: .infinity)
                 }
+                .buttonStyle(.borderedProminent)
                 .tint(.red)
             }
-            .buttonStyle(.borderedProminent)
             .controlSize(.large)
         }
     }

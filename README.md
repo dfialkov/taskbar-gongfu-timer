@@ -29,7 +29,7 @@ open GongfuTimer.app
 
 ## Requirements
 
-macOS 14 (Sonoma) or later.
+macOS 26 (Tahoe) or later.
 
 ## License
 
