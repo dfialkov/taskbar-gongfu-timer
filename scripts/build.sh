@@ -50,7 +50,7 @@ if [ ! -f "$APP/Contents/Resources/AppIcon.icns" ]; then
     iconutil -c icns /tmp/GongfuTimer.iconset -o "$APP/Contents/Resources/AppIcon.icns"
 fi
 
-# Touch to bust Finder icon cache
-touch "$APP"
+# Ad-hoc codesign so macOS doesn't flag the app as damaged
+codesign --force --sign - "$APP"
 
 echo "Done: $APP ($(du -sh "$APP" | cut -f1))"
