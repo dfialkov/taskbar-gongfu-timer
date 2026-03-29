@@ -15,7 +15,9 @@ struct GongfuTimerApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            TimerPopoverView(model: model)
+            GlassEffectContainer {
+                TimerPopoverView(model: model)
+            }
         } label: {
             if model.menuBarLabel.isEmpty {
                 if model.timerFinished {

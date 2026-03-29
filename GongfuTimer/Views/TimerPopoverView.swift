@@ -4,6 +4,7 @@ struct TimerPopoverView: View {
     @Bindable var model: TimerModel
     @State private var isEditingDuration = false
     @State private var editText = ""
+    @FocusState private var isFocused: Bool
 
     var body: some View {
         VStack(spacing: 16) {
@@ -34,8 +35,8 @@ struct TimerPopoverView: View {
             }
 
             // Timer display with nudge buttons
-            HStack(spacing: 12) {
-                nudgeButton(seconds: -5)
+            HStack(spacing: 20) {
+                nudgeButton(seconds: -TimerModel.nudgeStep)
 
                 TimerDisplayView(
                     progress: model.progress,
@@ -49,7 +50,7 @@ struct TimerPopoverView: View {
                     onStop: model.stop
                 )
 
-                nudgeButton(seconds: 5)
+                nudgeButton(seconds: TimerModel.nudgeStep)
             }
 
             // Controls
@@ -74,7 +75,36 @@ struct TimerPopoverView: View {
         .onTapGesture { commitEdit() }
         .padding()
         .frame(width: 280)
+        .focusable()
+        .focusEffectDisabled()
+        .focused($isFocused)
+        .onAppear { isFocused = true }
         .onDisappear { isEditingDuration = false }
+        .onKeyPress(keys: [.return]) { press in
+            guard !isEditingDuration else { return .ignored }
+            if press.modifiers.contains(.shift) {
+                if model.isRunning || model.isPaused {
+                    model.stop()
+                }
+            } else if model.isRunning && !model.isPaused {
+                model.pause()
+            } else if model.isPaused {
+                model.resume()
+            } else {
+                model.start()
+            }
+            return .handled
+        }
+        .onKeyPress(keys: [.leftArrow, .rightArrow]) { press in
+            let forward = press.key == .rightArrow
+            if press.modifiers.contains(.shift) {
+                model.cycleIncrement(forward: forward)
+                return .handled
+            }
+            guard !isEditingDuration else { return .ignored }
+            model.nudge(seconds: forward ? TimerModel.nudgeStep : -TimerModel.nudgeStep)
+            return .handled
+        }
     }
 
     private func commitEdit() {
@@ -91,10 +121,10 @@ struct TimerPopoverView: View {
             model.nudge(seconds: seconds)
         } label: {
             Text(seconds > 0 ? "+\(seconds)" : "\(seconds)")
-                .font(.system(.caption, design: .monospaced))
+                .font(.system(.body, design: .monospaced))
                 .fontWeight(.medium)
         }
-        .buttonStyle(.bordered)
-        .controlSize(.small)
+        .buttonStyle(.plain)
+        .foregroundStyle(.secondary)
     }
 }

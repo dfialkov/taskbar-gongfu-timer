@@ -3,7 +3,7 @@ import SwiftUI
 struct InfusionInfoView: View {
     @Binding var incrementPerSteep: Int
 
-    private let options = [0, 5, 15, 30]
+    private let options = TimerModel.incrementOptions
 
     var body: some View {
         VStack(spacing: 6) {

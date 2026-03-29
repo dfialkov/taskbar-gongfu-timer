@@ -85,6 +85,16 @@ final class TimerModel {
         currentDuration = max(1, currentDuration + seconds)
     }
 
+    static let nudgeStep = 5
+    static let incrementOptions = [0, 5, 15, 30]
+
+    func cycleIncrement(forward: Bool) {
+        guard let idx = Self.incrementOptions.firstIndex(of: incrementPerSteep) else { return }
+        let next = forward ? idx + 1 : idx - 1
+        guard Self.incrementOptions.indices.contains(next) else { return }
+        incrementPerSteep = Self.incrementOptions[next]
+    }
+
     func resetSteepCount() {
         steepCount = 0
     }
@@ -122,7 +132,8 @@ final class TimerModel {
         let total = TimeInterval(totalSeconds)
 
         progress = min(elapsed / total, 1.0)
-        secondsRemaining = max(totalSeconds - Int(elapsed), 0)
+        let newRemaining = max(totalSeconds - Int(elapsed), 0)
+        if newRemaining != secondsRemaining { secondsRemaining = newRemaining }
 
         if elapsed >= total {
             timerCompleted()
