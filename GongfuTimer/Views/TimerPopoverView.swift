@@ -80,6 +80,9 @@ struct TimerPopoverView: View {
         .focused($isFocused)
         .onAppear { isFocused = true }
         .onDisappear { isEditingDuration = false }
+        .onChange(of: isEditingDuration) { _, editing in
+            if !editing { isFocused = true }
+        }
         .onKeyPress(keys: [.return]) { press in
             guard !isEditingDuration else { return .ignored }
             if press.modifiers.contains(.shift) {
