@@ -1,6 +1,7 @@
 # Build artifacts
 .build/
 GongfuTimer.app/
+GongfuTimer-*.zip
 
 # Xcode
 *.xcodeproj/
